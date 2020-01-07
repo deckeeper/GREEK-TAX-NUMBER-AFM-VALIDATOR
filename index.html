@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="sakura_dark.css" type="text/css">
+        <style>
+            input[type=number]::-webkit-inner-spin-button, 
+            input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+            }
+            body{
+                text-align: center;
+            }
+        </style>
+    </head>
+        <body>
+            <h1>AFM VALIDATOR</h1>
+            <label>AFM</label>
+            <input type="number" id="afm" maxlength="9" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            <br>
+            <p id="result"></p>
+            <p>Press Enter After you inserted you AFM</p>
+        </body>
+</html>
+
+
+<script>
+
+document.getElementById("afm").addEventListener("change", function(){
+    const value = document.getElementById("afm").value;
+  // First Remove Last Digit
+  const last_digit = value.substr(value.length - 1, 1);
+      // Reverse The Less Digits
+      const less_digits = value
+      	.substr(0, value.length - 1).split('').reverse().join('');
+        
+      var index = 1, digit, multiple=0, sum=0, mod1, mod2;
+      // Calculate The Sum
+    	for(var i in less_digits) {
+      		digit = less_digits[i];
+          multiple = digit * Math.pow(2, index);
+          sum += multiple;
+      		index++;
+      }
+      // Modulus with 11
+      mod1 = sum % 11;
+      // Modulus with 10
+      mod2 = mod1 % 10;
+      
+      if(mod2 == last_digit) {
+        document.getElementById("result").style.color='green';
+        document.getElementById("result").innerHTML  = 'VALID AFM';
+      } else {
+        document.getElementById("result").style.color='tomato';
+        document.getElementById("result").innerHTML  = 'INVALID AFM';
+      }
+});
+
+</script>
